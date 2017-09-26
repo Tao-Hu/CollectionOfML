@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Network estimation using the graphical LASSO</title>
+
+<script type="text/javascript">
+window.onload = function() {
+  var imgs = document.getElementsByTagName('img'), i, img;
+  for (i = 0; i < imgs.length; i++) {
+    img = imgs[i];
+    // center an image if it is the only element of its parent
+    if (img.parentElement.childElementCount === 1)
+      img.parentElement.style.textAlign = 'center';
+  }
+};
+</script>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Network estimation using the graphical LASSO</h1>
+
+<h2>Contruct and display the true network</h2>
+
+<pre><code class="r"> library(glasso)
+
+ n &lt;- 100
+ p &lt;- 10
+
+ # Construct a sparse precision matrix
+
+ trueP &lt;- diag(p)
+ for(j in 5:p){
+  trueP[j,j-1] &lt;- -.4
+  trueP[j-1,j] &lt;- -.4
+ }
+ trueS &lt;- solve(trueP)
+ trueA &lt;- ifelse(trueP!=0 &amp; row(trueP)!=col(trueP),1,0)
+
+ trueP
+</code></pre>
+
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]    1    0    0  0.0  0.0  0.0  0.0  0.0  0.0   0.0
+##  [2,]    0    1    0  0.0  0.0  0.0  0.0  0.0  0.0   0.0
+##  [3,]    0    0    1  0.0  0.0  0.0  0.0  0.0  0.0   0.0
+##  [4,]    0    0    0  1.0 -0.4  0.0  0.0  0.0  0.0   0.0
+##  [5,]    0    0    0 -0.4  1.0 -0.4  0.0  0.0  0.0   0.0
+##  [6,]    0    0    0  0.0 -0.4  1.0 -0.4  0.0  0.0   0.0
+##  [7,]    0    0    0  0.0  0.0 -0.4  1.0 -0.4  0.0   0.0
+##  [8,]    0    0    0  0.0  0.0  0.0 -0.4  1.0 -0.4   0.0
+##  [9,]    0    0    0  0.0  0.0  0.0  0.0 -0.4  1.0  -0.4
+## [10,]    0    0    0  0.0  0.0  0.0  0.0  0.0 -0.4   1.0
+</code></pre>
+
+<pre><code class="r"> round(trueS,2)
+</code></pre>
+
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]    1    0    0 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [2,]    0    1    0 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [3,]    0    0    1 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [4,]    0    0    0 1.25 0.62 0.31 0.16 0.08 0.04  0.01
+##  [5,]    0    0    0 0.62 1.56 0.78 0.39 0.19 0.09  0.04
+##  [6,]    0    0    0 0.31 0.78 1.64 0.82 0.40 0.19  0.08
+##  [7,]    0    0    0 0.16 0.39 0.82 1.65 0.82 0.39  0.16
+##  [8,]    0    0    0 0.08 0.19 0.40 0.82 1.64 0.78  0.31
+##  [9,]    0    0    0 0.04 0.09 0.19 0.39 0.78 1.56  0.62
+## [10,]    0    0    0 0.01 0.04 0.08 0.16 0.31 0.62  1.25
+</code></pre>
+
+<pre><code class="r"> trueA
+</code></pre>
+
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,]    0    0    0    0    0    0    0    0    0     0
+##  [2,]    0    0    0    0    0    0    0    0    0     0
+##  [3,]    0    0    0    0    0    0    0    0    0     0
+##  [4,]    0    0    0    0    1    0    0    0    0     0
+##  [5,]    0    0    0    1    0    1    0    0    0     0
+##  [6,]    0    0    0    0    1    0    1    0    0     0
+##  [7,]    0    0    0    0    0    1    0    1    0     0
+##  [8,]    0    0    0    0    0    0    1    0    1     0
+##  [9,]    0    0    0    0    0    0    0    1    0     1
+## [10,]    0    0    0    0    0    0    0    0    1     0
+</code></pre>
+
+<pre><code class="r"> library(network)
+ g &lt;- network(trueA)
+ plot(g,label=1:p,main=&quot;True network&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk net"/> </p>
+
+<h2>Generate data</h2>
+
+<pre><code class="r"> x &lt;- matrix(rnorm(n*p),n,p)%*%chol(trueS)
+ S &lt;- cov(x)
+ round(S,2)
+</code></pre>
+
+<pre><code>##        [,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
+##  [1,]  1.02 -0.13 -0.12  0.03 -0.17 -0.18 -0.09 -0.33 -0.14  0.11
+##  [2,] -0.13  1.37  0.10  0.07  0.07 -0.04 -0.04 -0.05  0.13  0.17
+##  [3,] -0.12  0.10  1.05  0.14  0.08  0.10  0.06 -0.09 -0.14 -0.15
+##  [4,]  0.03  0.07  0.14  1.40  0.72  0.31  0.16 -0.06 -0.29  0.21
+##  [5,] -0.17  0.07  0.08  0.72  1.67  0.61  0.32  0.26  0.09  0.29
+##  [6,] -0.18 -0.04  0.10  0.31  0.61  1.51  0.74  0.60  0.25  0.34
+##  [7,] -0.09 -0.04  0.06  0.16  0.32  0.74  1.54  1.04  0.53  0.29
+##  [8,] -0.33 -0.05 -0.09 -0.06  0.26  0.60  1.04  1.76  0.96  0.33
+##  [9,] -0.14  0.13 -0.14 -0.29  0.09  0.25  0.53  0.96  1.72  0.68
+## [10,]  0.11  0.17 -0.15  0.21  0.29  0.34  0.29  0.33  0.68  1.17
+</code></pre>
+
+<h2>Compute the tuning parameter using BIC</h2>
+
+<pre><code class="r"> nr  &lt;- 100
+ rho &lt;- seq(0.1,1,length=nr)
+ bic &lt;- rho
+ for(j in 1:nr){
+  a       &lt;- glasso(S,rho[j])
+  p_off_d &lt;- sum(a$wi!=0 &amp; col(S)&lt;row(S))
+  bic[j]  &lt;- -2*(a$loglik) + p_off_d*log(n)
+ }
+
+ best &lt;- which.min(bic)
+ plot(rho,bic)
+ points(rho[best],bic[best],pch=19)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk bic"/> </p>
+
+<h2>Plot the graph obtained from graph lasso</h2>
+
+<pre><code class="r"> a &lt;- glasso(S,rho[best])
+ names(a)
+</code></pre>
+
+<pre><code>## [1] &quot;w&quot;       &quot;wi&quot;      &quot;loglik&quot;  &quot;errflag&quot; &quot;approx&quot;  &quot;del&quot;     &quot;niter&quot;
+</code></pre>
+
+<pre><code class="r"> # Estimated covariance
+ round(a$w,2)
+</code></pre>
+
+<pre><code>##       [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
+##  [1,] 1.35 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [2,] 0.00 1.71 0.00 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [3,] 0.00 0.00 1.38 0.00 0.00 0.00 0.00 0.00 0.00  0.00
+##  [4,] 0.00 0.00 0.00 1.74 0.39 0.05 0.01 0.01 0.00  0.00
+##  [5,] 0.00 0.00 0.00 0.39 2.00 0.27 0.06 0.04 0.01  0.00
+##  [6,] 0.00 0.00 0.00 0.05 0.27 1.84 0.41 0.26 0.08  0.01
+##  [7,] 0.00 0.00 0.00 0.01 0.06 0.41 1.88 0.70 0.21  0.03
+##  [8,] 0.00 0.00 0.00 0.01 0.04 0.26 0.70 2.09 0.62  0.10
+##  [9,] 0.00 0.00 0.00 0.00 0.01 0.08 0.21 0.62 2.06  0.35
+## [10,] 0.00 0.00 0.00 0.00 0.00 0.01 0.03 0.10 0.35  1.50
+</code></pre>
+
+<pre><code class="r"> # Estimated inverse covariance (precision)
+ round(a$wi,2)
+</code></pre>
+
+<pre><code>##       [,1] [,2] [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10]
+##  [1,] 0.74 0.00 0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+##  [2,] 0.00 0.58 0.00  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+##  [3,] 0.00 0.00 0.72  0.00  0.00  0.00  0.00  0.00  0.00  0.00
+##  [4,] 0.00 0.00 0.00  0.60 -0.12  0.00  0.00  0.00  0.00  0.00
+##  [5,] 0.00 0.00 0.00 -0.12  0.53 -0.08  0.00  0.00  0.00  0.00
+##  [6,] 0.00 0.00 0.00  0.00 -0.08  0.58 -0.11 -0.03  0.00  0.00
+##  [7,] 0.00 0.00 0.00  0.00  0.00 -0.11  0.63 -0.20  0.00  0.00
+##  [8,] 0.00 0.00 0.00  0.00  0.00 -0.03 -0.20  0.60 -0.16  0.00
+##  [9,] 0.00 0.00 0.00  0.00  0.00  0.00  0.00 -0.16  0.55 -0.12
+## [10,] 0.00 0.00 0.00  0.00  0.00  0.00  0.00  0.00 -0.12  0.69
+</code></pre>
+
+<pre><code class="r"> P &lt;- a$wi
+ A &lt;- ifelse(P!=0 &amp; row(P)!=col(P),1,0)
+
+ g &lt;- network(A)
+ plot(g,label=1:p,main=&quot;Estimated network&quot;)
+</code></pre>
+
+<p><img src="data:image/png;base64,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BOR9+j2T/tP6oA0OGmsnjvj8MWaHY6baEa/jJ0KG2hVP9X9EzLQz/d+7C9jkgJF2p/+7tvG6HC9RB0r3XzQK12bUhdxM/18zitZmpvdT/8KD9RnrvbuJWI0Ge+9de6hOk733VhGq1aHCdIcrPlKWA8BezgWKcgxQ8XGSHAVTPHtiN9G1BVHarfdTXxlB+q33P3ji9T7Rsw0hOq73CzDxer/CEq/3GdaXJgNECANJ/PEJAkER33XVlyGALIyQdUWr72GIz7l24U9wxKt+Ta92HC7+yO1HJLv4bAtSb0avnhzU+r91X9T+lNTik915YFNyi091r5Ft6XQ4KD4c+cV7qn9KZvFn83p/Sp/j4cjLuYM2HZ7U4uU1iqfSQ4riA5JSvHvaZzKKd0pXQ4cmKT4i+cSnvZfYtiieyv5d6r4Mg+JrSCfeN+zq2L9LXs7FRPFQ8omXKnY/1ys+KHtf/yg+JEXxUHa//FF8UBQPRfFUFE9l32Ne8VHZ+Vtmig/K3t8yU3xQ9v6ykeKDongoe3/LTPFR2flbZooPy77v2ioeiuKhKB6K4sNzVrT1gK/46JyFl9PGrhQfnMtv4iieh+KhKB6K4qEoHorioXgdLxuieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieChxxJc/jg7BIUyrS/n375/muxGm03/e/zd/dAwMUTp99q74bkTptOI7E6bTnur7EqbTf5M753b9CNRqr+Z6Yq+hKB7K4eI9wR/D0V0vATIgidD0CBn2JtwnERHCRMiwM/E+iQiQJUCE3Yn39lSALAEi7E1RfMQEHVB8vABdUPzD9qPNdvfh/yJjze0OF48h2v4dK410Q/FQFN+XMGf8IDEoxPloIkYKFDFaHiMFihgtj5EChGM8lhgtj5ECRYyWx0iBwVk9Fa/j5VgUD0XxUBQPRfFQFA9F8VAUD0XxUBQPRfFQFA9F8VAUD0XxUBQPRfFQFA9F8VAUD0XxUBQPRfFQFA9F8VAUD0XxUBQPRfFQFA9F8X9E+e5yR3gVP1IgC+quoNX7jGlpaZp5WLnPYN7WFlbuMxQPRfFUHOOhOKsXDoqHongoiocCF88tn1v5H7i5/A1u5ae/4rnlcyuf4JbPrXyCWz638glu+dzKJ7jlcyuf4JbPrXyCWz63cjiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoioeieCiKh6J4KIqHongoiofyH5R9sgDQRqioAAAAAElFTkSuQmCC" alt="plot of chunk glasso"/> </p>
+
+</body>
+
+</html>
