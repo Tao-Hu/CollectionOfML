@@ -35,7 +35,7 @@ Commonly used Machine learning algorithms implemented by R.
 
 5. Classification
    * [Classification using glmnet](https://tao-hu.github.io/CollectionOfML/Classification/glmnet.html)
-   * [Logistic regression via meta analysis](https://tao-hu.github.io/CollectionOfML/Classification/meta_logistic.R)
+   * [Logistic regression via meta analysis](https://github.com/Tao-Hu/CollectionOfML/blob/master/Classification/meta_logistic.R)
    * [Adaboost](https://tao-hu.github.io/CollectionOfML/Classification/adaboost.html)
    * [SVM](https://tao-hu.github.io/CollectionOfML/Classification/SVM.html)
 
